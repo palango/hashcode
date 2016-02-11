@@ -7,7 +7,7 @@ class Drone(object):
     def __init__(self, startingLocation, maximumWeight, nItemTypes):
         self.location = startingLocation
         self.maximumWeight = maximumWeight
-        self.cargo = nItemTypes[0]
+        self.cargo = nItemTypes*[0]
         self.finishedAt = 0
 
     def load(self, nItems, itemType, warehouse):
