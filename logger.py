@@ -13,12 +13,12 @@ class Logger:
             for cmd in commands:
                 cmd_name = cmd['name']
                 if cmd_name == 'load':
-                    f.write('FIXME:{} L {} {} {}'.format(cmd['drone_id'],
+                    f.write('{} L {} {} {}'.format(cmd['drone_id'],
                                                          cmd['warehouse_id'],
                                                          cmd['prod_id'],
                                                          cmd['prod_count']))
                 elif cmd_name == 'deliver':
-                    f.write('FIXME:{} L {} {} {}'.format(cmd['drone_id'],
+                    f.write('{} D {} {} {}'.format(cmd['drone_id'],
                                                          cmd['order_id'],
                                                          cmd['prod_id'],
                                                          cmd['prod_count']))
