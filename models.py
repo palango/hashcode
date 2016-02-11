@@ -26,6 +26,7 @@ class Drone(object):
         self.maximumWeight = maximumWeight
         self.cargo = nItemTypes*[0]
         self.finishedAt = 0
+        self.command = None
 
     def load(self, nItems, itemType, warehouse):
         """Moves the drone to a target warehouse and takes the required items
@@ -45,6 +46,14 @@ class Drone(object):
     def wait(self, nTurns):
         """Increments the finishedAt counter"""
         self.finishedAt += nTurns
+
+    def executeCommand(self):
+        if(self.command is not None):
+            self.command[0](self.command[1])
+
+    def assignCommand(self, command):
+        """Command: (fcn, args)"""
+        self.command = command
 
     def _move(self, targetLocation):
         """Moves the drone to the targetLocation and returns the turns taken"""

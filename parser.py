@@ -40,9 +40,16 @@ droneList = [Drone(warehouseList[0].location, maxLoad, nTypes) for i in range(nD
 
 #World
 for iStep in xrange(maxSteps):
-	for drone in droneList:
-		if drone.finishedAt == 0:
-			#do something
-			print("bla")
-		#else:
-			#do nothing
+	#do all jobs pending and find free drones
+	freeDronesIdx = []
+	for iDrone in xrange(nDrones):
+		if droneList[iDrone].finishedAt == iStep+1:
+			print("Do job")
+		elif droneList[iDrone].finishedAt == iStep:
+			freeDronesIdx.append(iDrone)
+	#assign jobs to free drones
+	
+
+
+
+
