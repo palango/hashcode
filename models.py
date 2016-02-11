@@ -36,10 +36,11 @@ class Drone(object):
         self.cargo[itemType] += nItems
         self.finishedAt += turnsMoving + 1
 
-    def deliver(self, nItems, itemType, customer):
+    def deliver(self, nItems, itemType, order):
         """Moves the drone to a target customer and drops the required items
         and increments its finishedAt counter"""
-        turnsMoving = self._move(customer.location)
+        turnsMoving = self._move(order.location)
+        order.items[itemType] -= nItems
         self.cargo[itemType] -= nItems
         self.finishedAt += turnsMoving + 1
 
