@@ -48,10 +48,19 @@ for iStep in xrange(maxSteps):
         elif droneList[iDrone].finishedAt == iStep:
             freeDronesIdx.append(iDrone)
     #assign jobs to free drones
+
+
+def orderWeight(order):
+    sum = 0
+    for i in range(len(order.items)):
+        sum += order.items[i] * productWeights[i]
+    return sum
     
-
-
-
 def easyOrders(orders,warehouses):
-        for order in orders:
-                return
+    easy = []
+    for oidx, order in orders.enumerate():
+        if orderWeight(order) < maxLoad:
+            for widx, warehouse in warehouses.enumerate():
+                if order.is_ready_at(warehouse):
+                    easy.append((oidx, widx))
+                    break
