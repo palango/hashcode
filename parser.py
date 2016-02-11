@@ -111,3 +111,4 @@ def easyOrders(orders,warehouses):
                     for i in range(len(wh[widx].stock)):
                         wh[widx].stock[i] -= order.items[i]
                     break
+    return easy
