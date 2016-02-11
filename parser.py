@@ -1,7 +1,10 @@
 from models import *
+from logger import Logger
 import math
 
-def getDistance(location1,location2):
+log = Logger()
+
+def getDistance(location1, location2):
     euclidDist = math.sqrt((location1[0]-location2[0])**2+(location1[1]-location2[1])**2)
     return math.ceil(euclidDist)
 
