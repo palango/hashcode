@@ -52,4 +52,6 @@ for iStep in xrange(maxSteps):
 
 
 
-
+def easyOrders(orders,warehouses):
+        for order in orders:
+                return
