@@ -1,3 +1,5 @@
+from models import *
+
 f = open("busy_day.in","r")
 commandList = []
 #Parameters of simulation
@@ -13,8 +15,7 @@ warehouseList = []
 for iWarehouse in xrange(nWarehouses):
 	location = (int(i) for i in f.readline().split())
 	items = [int(i) for i in f.readline().split()]
-	#TODO create a warehouse and put in list
-	warehouse = [location, items]
+	warehouse = Warehouse(items,location)
 	warehouseList.append(warehouse)
 
 
@@ -25,7 +26,6 @@ for iWarehouse in xrange(nWarehouses):
 	location = (int(i) for i in f.readline().split())
 	nOrderedProducts = nOrders=int(f.readline())
 	items = [int(i) for i in f.readline().split()]
-	#TODO create a warehouse and put in list
-	order = [location, items]
+	order = Order(items,location)
 	orderList.append(order)
 
