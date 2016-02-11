@@ -14,11 +14,11 @@ commandList = []
 nTypes=int(f.readline())
 productWeights = [int(i) for i in f.readline().split()]
 
-#warehouses and availability of individual product types 
+#warehouses and availability of individual product types
 nWarehouses=int(f.readline())
 warehouseList = []
 for iWarehouse in xrange(nWarehouses):
-    location = (int(i) for i in f.readline().split())
+    location = tuple([int(i) for i in f.readline().split()])
     items = [int(i) for i in f.readline().split()]
     warehouse = Warehouse(items,location)
     warehouseList.append(warehouse)
@@ -26,12 +26,13 @@ for iWarehouse in xrange(nWarehouses):
 #customer orders
 nOrders=int(f.readline())
 orderList = []
-for iWarehouse in xrange(nWarehouses):
-    location = (int(i) for i in f.readline().split())
+for iOrder in xrange(nOrders):
+    location = tuple([int(i) for i in f.readline().split()])
     nOrderedProducts = int(f.readline())
-    items = [int(i) for i in f.readline().split()]
-    warehouseDistances = [(getDistance(location, warehouseList[i].location),i) for iWarehouse in range(nWarehouses)]
-    warehouseDistances = warehouseDistances.sort() 
+    tmpItems = [int(i) for i in f.readline().split()]
+    items = [tmpItems.count(i) for i in range(nTypes)]
+    warehouseDistances = [(getDistance(location, warehouseList[i].location),i) for i in range(nWarehouses)]
+    warehouseDistances = warehouseDistances.sort()
     order = Order(items,location,warehouseDistances)
     orderList.append(order)
 
@@ -48,7 +49,6 @@ for iStep in xrange(maxSteps):
         elif droneList[iDrone].finishedAt == iStep:
             freeDronesIdx.append(iDrone)
     #assign jobs to free drones
-
 
 def orderWeight(order):
     sum = 0
