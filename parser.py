@@ -63,9 +63,36 @@ for iStep in xrange(maxSteps):
                 if orderIdx is not None:
                     break
             #Handle order for drone
+            currentOrder = orderList[orderIdx]
+            for itemIdx in xrange(len(currentOrder.items)):
+                itemcount = currentOrder.items[itemIdx]
+                if itemcount > 0:
+                    droneList[iDrone].load(itemcount, itemIdx, warehouseList[preferredWarehouseIdx])
+                    #TODO create command in logger
+                    commandDict = {
+                        'name' : 'load',
+                        'drone_id' : iDrone,
+                        'warehouse_id' : preferredWarehouseIdx,
+                        'prod_id' : itemIdx,
+                        'prod_count' : itemcount
+                    }
+                    log.append_command(droneList[iDrone].finishedAt, commandDict)
+            for itemIdx in xrange(len(currentOrder.items)):
+                itemcount = currentOrder.items[itemIdx]
+                if itemcount > 0:
+                    droneList[iDrone].deliver(itemcount, itemIdx, order[orderIdx])
+                    #TODO create command in logger
+                    commandDict = {
+                        'name' : 'deliver',
+                        'drone_id' : iDrone,
+                        'order_id' : orderIdx,
+                        'prod_id' : itemIdx,
+                        'prod_count' : itemcount
+                    }
+                    log.append_command(droneList[iDrone].finishedAt, commandDict)
 
             #update available orders
-            availableOrders = easyOrders(orderList,warehouseList)
+            #availableOrders = easyOrders(orderList,warehouseList)
 
 def orderWeight(order):
     sum = 0
