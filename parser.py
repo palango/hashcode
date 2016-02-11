@@ -1,5 +1,6 @@
 from models import *
 import math
+import copy
 
 def getDistance(location1,location2):
     euclidDist = math.sqrt((location1[0]-location2[0])**2+(location1[1]-location2[1])**2)
@@ -58,6 +59,7 @@ def orderWeight(order):
     
 def easyOrders(orders,warehouses):
     easy = []
+    wh = copy.deepcopy(warehouses)
     for oidx, order in orders.enumerate():
         if orderWeight(order) < maxLoad:
             for widx, warehouse in warehouses.enumerate():
