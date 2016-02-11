@@ -7,7 +7,7 @@ class Order:
         self.warehouseDistances = warehouseDistances
 
     def is_ready_at(self, warehouse):
-        for idx, req_item in self.items.enumerate():
+        for idx, req_item in enumerate(self.items):
             if warehouse.stock[idx] < req_item:
                 return False
         return True
@@ -31,7 +31,7 @@ class Drone(object):
         """Moves the drone to a target warehouse and takes the required items
         and increments its finishedAt counter"""
         turnsMoving = self._move(warehouse.location)
-        warehouse.items[itemType] -= nItems
+        warehouse.stock[itemType] -= nItems
         self.cargo[itemType] += nItems
         self.finishedAt += turnsMoving + 1
 
@@ -59,6 +59,6 @@ class Drone(object):
         """Moves the drone to the targetLocation and returns the turns taken"""
         distance = math.sqrt(
             (self.location[0] - targetLocation[0])**2 +
-            self.location[1] - targetLocation[1])
+            (self.location[1] - targetLocation[1])**2)
         self.location = targetLocation
         return math.ceil(distance)

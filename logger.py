@@ -3,12 +3,12 @@ class Logger:
         self.commands = {}
 
     def append_command(self, t, command):
-        clist = self.commands[t]
+        clist = self.commands.get(t, [])
         clist.append(command)
         self.commands[t] = clist
 
-    def write_to_file(self, t_max):
-        fname = 'out.txt'
+    def write_to_file(self, t_max, s):
+        fname = 'out{}.txt'.format(s)
 
         linear = []
 
@@ -17,16 +17,16 @@ class Logger:
                 linear.extend(self.commands[t])
 
         with open(fname, 'w') as f:
-            f.write('{}'.format(len(self.commands)))
+            f.write('{}\n'.format(len(linear)))
             for cmd in linear:
                 cmd_name = cmd['name']
                 if cmd_name == 'load':
-                    f.write('{} L {} {} {}'.format(cmd['drone_id'],
+                    f.write('{} L {} {} {}\n'.format(cmd['drone_id'],
                                                    cmd['warehouse_id'],
                                                    cmd['prod_id'],
                                                    cmd['prod_count']))
                 elif cmd_name == 'deliver':
-                    f.write('{} D {} {} {}'.format(cmd['drone_id'],
+                    f.write('{} D {} {} {}\n'.format(cmd['drone_id'],
                                                    cmd['order_id'],
                                                    cmd['prod_id'],
                                                    cmd['prod_count']))
