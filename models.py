@@ -6,7 +6,6 @@ class Order:
         self.location = location
         self.warehouseDistances = warehouseDistances
 
-
     def is_ready_at(self, warehouse):
         for idx, req_item in self.items.enumerate():
             if warehouse.stock[idx] < req_item:

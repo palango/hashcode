@@ -1,7 +1,11 @@
 from models import *
+from logger import Logger
 import math
+import copy
 
-def getDistance(location1,location2):
+log = Logger()
+
+def getDistance(location1, location2):
     euclidDist = math.sqrt((location1[0]-location2[0])**2+(location1[1]-location2[1])**2)
     return math.ceil(euclidDist)
 
@@ -63,7 +67,20 @@ for iStep in xrange(maxSteps):
             #update available orders
             availableOrders = easyOrders(orderList,warehouseList)
 
-
-
-
-
+def orderWeight(order):
+    sum = 0
+    for i in range(len(order.items)):
+        sum += order.items[i] * productWeights[i]
+    return sum
+    
+def easyOrders(orders,warehouses):
+    easy = []
+    wh = copy.deepcopy(warehouses)
+    for oidx, order in orders.enumerate():
+        if orderWeight(order) < maxLoad:
+            for widx in order.warehouseDistances:
+                if order.is_ready_at(wh[widx]):
+                    easy.append((oidx, widx))
+                    for i in range(len(wh[widx].stock)):
+                        wh[widx].stock[i] -= order.items[i]
+                    break
