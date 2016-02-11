@@ -42,13 +42,26 @@ droneList = [Drone(warehouseList[0].location, maxLoad, nTypes) for i in range(nD
 #World
 for iStep in xrange(maxSteps):
     #do all jobs pending and find free drones
-    freeDronesIdx = []
+    #freeDronesIdx = []
+    availableOrders = easyOrders(orderList,warehouseList)
     for iDrone in xrange(nDrones):
-        if droneList[iDrone].finishedAt == iStep+1:
-            print("Do job")
-        elif droneList[iDrone].finishedAt == iStep:
-            freeDronesIdx.append(iDrone)
-    #assign jobs to free drones
+        if droneList[iDrone].finishedAt == iStep:
+            warehouseDistances = [(getDistance(droneList[iDrone].location, warehouseList[i].location),i) for i in range(nWarehouses)]
+            warehouseDistances = warehouseDistances.sort()
+            #Find order idx for drone, starting by looking at the closest warehouse
+            for i in xrange(nWarehouses):
+                preferredWarehouseIdx = warehouseDistances[i][1]
+                orderIdx = None
+                for availableOrder in availableOrders:
+                    if(availableOrder[1]==preferredWarehouseIdx):
+                        orderIdx = availableOrder[0]
+                        break
+                if orderIdx is not None:
+                    break
+            #Handle order for drone
+
+            #update available orders
+            availableOrders = easyOrders(orderList,warehouseList)
 
 
 
