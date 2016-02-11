@@ -65,9 +65,9 @@ def easyOrders(orders,warehouses):
     wh = copy.deepcopy(warehouses)
     for oidx, order in orders.enumerate():
         if orderWeight(order) < maxLoad:
-            for widx, warehouse in wh.enumerate():
-                if order.is_ready_at(warehouse):
+            for widx in order.warehouseDistances:
+                if order.is_ready_at(wh[widx]):
                     easy.append((oidx, widx))
-                    for i in range(len(warehouse.stock)):
-                        warehouse.stock[i] -= order.items[i]
+                    for i in range(len(wh[widx].stock)):
+                        wh[widx].stock[i] -= order.items[i]
                     break
