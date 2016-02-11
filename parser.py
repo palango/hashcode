@@ -1,6 +1,11 @@
 from models import *
+import math
 
-f = open("busy_day.in","r")
+def getDistance(location1,location2):
+	euclidDist = math.sqrt((location1[0]-location2[0])**2+(location1[1]-location2[1])**2)
+	return math.ceil(euclidDist)
+
+f = open("example.in","r")
 commandList = []
 #Parameters of simulation
 [nRows,nCols,nDrones,maxSteps,maxLoad]=[int(i) for i in f.readline().split()]
@@ -23,14 +28,21 @@ nOrders=int(f.readline())
 orderList = []
 for iWarehouse in xrange(nWarehouses):
 	location = (int(i) for i in f.readline().split())
-	nOrderedProducts = nOrders=int(f.readline())
+	nOrderedProducts = int(f.readline())
 	items = [int(i) for i in f.readline().split()]
-	order = Order(items,location)
+	warehouseDistances = [(getDistance(location, warehouseList[i].location),i) for iWarehouse in range(nWarehouses)]
+	warehouseDistances = warehouseDistances.sort() 
+	order = Order(items,location,warehouseDistances)
 	orderList.append(order)
 
 #Create drones
 droneList = [Drone(warehouseList[0].location, maxLoad, nTypes) for i in range(nDrones)]
 
 #World
-#for iStep in xrange(maxSteps):
-	#Do nothing
+for iStep in xrange(maxSteps):
+	for drone in droneList:
+		if drone.finishedAt == 0:
+			#do something
+			print("bla")
+		#else:
+			#do nothing

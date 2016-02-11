@@ -1,9 +1,10 @@
 import math
 
 class Order:
-    def __init__(self, items, location):
+    def __init__(self, items, location, warehouseDistances):
         self.items = items
         self.location = location
+        self.warehouseDistances = warehouseDistances
 
 
 	def is_ready_at(warehouse):
